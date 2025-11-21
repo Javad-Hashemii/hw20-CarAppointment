@@ -1,0 +1,20 @@
+﻿@page
+@model CarAppointment.Presentation.RazorPages.Pages.Authentication.LoginModel
+
+<h2 class="login-title">ورود</h2>
+
+<form method="post" class="login-form">
+    <div class="form-group">
+        <label class="form-label">نام کاربری</label>
+        <input asp-for="Username" class="form-control input-username" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">رمز عبور</label>
+        <input asp-for="Password" type="password" class="form-control input-password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-login mt-2">ورود</button>
+
+    <p class="login-error text-danger">@Model.ErrorMessage</p>
+</form>

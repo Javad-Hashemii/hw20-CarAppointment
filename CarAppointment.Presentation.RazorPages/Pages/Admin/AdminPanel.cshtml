@@ -1,0 +1,62 @@
+﻿@page
+@model CarAppointment.Presentation.RazorPages.Pages.Admin.AdminPanelModel
+@{
+    ViewData["Title"] = "پنل مدیریت - نوبت‌ها";
+}
+
+<h2 class="page-title">لیست نوبت‌ها</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger") panel-message">
+        @Model.Message
+    </div>
+}
+
+<form method="get" class="filter-form mb-3">
+    <label class="form-label">فیلتر بر اساس تاریخ:</label>
+    <input type="date" asp-for="FilterDate" class="form-control input-date" />
+    <button type="submit" class="btn btn-primary btn-filter">اعمال فیلتر</button>
+    <a href="/Admin/AdminPanel" class="btn btn-secondary btn-show-all">نمایش همه</a>
+</form>
+
+<table class="table table-striped appointments-table">
+    <thead class="table-header">
+        <tr>
+            <th class="th-plate">پلاک</th>
+            <th class="th-owner">مالک</th>
+            <th class="th-brand">برند</th>
+            <th class="th-model">مدل</th>
+            <th class="th-date">تاریخ نوبت</th>
+            <th class="th-status">وضعیت</th>
+            <th class="th-actions">عملیات</th>
+        </tr>
+    </thead>
+    <tbody class="table-body">
+        @foreach (var app in Model.Appointments)
+        {
+            <tr class="appointment-row">
+                <td class="plate-number">@app.PlateNumber</td>
+                <td class="td-owner">@app.Firstname @app.LastName</td>
+                <td class="td-brand">@app.BrandName</td> 
+                <td class="td-model">@app.ModelName</td>
+                <td class="td-date">@app.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                <td class="td-status">@app.Status</td>
+                <td class="td-actions">
+                    @if (app.Status == "Pending")
+                    {
+                        <form method="post" asp-page-handler="Approve" class="action-form">
+                            <input type="hidden" name="appointmentId" value="@app.Id" />
+                            <button type="submit" class="btn btn-success btn-sm btn-approve">تایید</button>
+                        </form>
+
+                        <form method="post" asp-page-handler="Deny" class="action-form">
+                            <input type="hidden" name="appointmentId" value="@app.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm btn-deny">رد</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

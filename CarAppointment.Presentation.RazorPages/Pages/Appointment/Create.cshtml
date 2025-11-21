@@ -1,0 +1,100 @@
+﻿@page
+@model CarAppointment.Presentation.RazorPages.Pages.Appointment.CreateModel
+@{
+    ViewData["Title"] = "ثبت نوبت معاینه فنی";
+}
+
+<h2 class="page-title">ثبت نوبت معاینه فنی</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    @if (Model.IsSucces)
+    {
+        <div class="alert alert-success form-message">@Model.Message</div>
+    }
+    else
+    {
+        <div class="alert alert-danger form-message">@Model.Message</div>
+    }
+}
+<form method="post" class="appointment-form">
+
+    <div class="form-group mb-3">
+        <label class="form-label">نام</label>
+        <input asp-for="AppointmentDto.Firstname" class="form-control input-text" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">نام خانوادگی</label>
+        <input asp-for="AppointmentDto.LastName" class="form-control input-text" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">شماره موبایل</label>
+        <input asp-for="AppointmentDto.PhoneNumber" class="form-control input-text" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">کد ملی</label>
+        <input asp-for="AppointmentDto.NationalCode" class="form-control input-text" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">آدرس</label>
+        <input asp-for="AppointmentDto.Address" class="form-control input-text" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">تاریخ نوبت</label>
+        <input asp-for="AppointmentDto.AppointmentDate" type="date" class="form-control input-date" />
+    </div>
+
+    <div class="form-group mb-3 plate-number-group">
+        <label class="form-label">پلاک خودرو</label>
+        <input asp-for="PlatePart1" maxlength="2" class="form-control plate-part1" placeholder="12" />
+        <select asp-for="PlatePart2" class="form-control plate-part2">
+            <option value="">انتخاب</option>
+            <option>الف</option>
+            <option>ب</option>
+            <option>پ</option>
+            <option>ت</option>
+            <option>ث</option>
+            <option>ج</option>
+            <option>چ</option>
+            <option>ح</option>
+            <option>خ</option>
+        </select>
+        <input asp-for="PlatePart3" maxlength="3" class="form-control plate-part3" placeholder="345" />
+        <input asp-for="PlatePart4" maxlength="2" class="form-control plate-part4" placeholder="67" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">برند خودرو</label>
+        <select asp-for="AppointmentDto.BrandName" class="form-control select-brand">
+            <option value="">انتخاب برند</option>
+            @foreach (var b in Model.Brands)
+            {
+                <option value="@b.Name">@b.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">مدل خودرو</label>
+        <select asp-for="AppointmentDto.ModelId" class="form-control select-model">
+            <option value="">انتخاب مدل</option>
+            @foreach (var m in Model.Models)
+            {
+                <option value="@m.Id">@m.Name (@m.Name)</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label">سال ساخت</label>
+        <input asp-for="AppointmentDto.YearBuilt" type="number" class="form-control input-number" />
+    </div>
+
+    <button type="submit" class="btn btn-primary submit-btn">ثبت نوبت</button>
+
+</form>

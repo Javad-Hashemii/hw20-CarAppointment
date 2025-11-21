@@ -1,0 +1,191 @@
+﻿/* ====== Admin Panel RTL and Typography ====== */
+body {
+    direction: rtl;
+    font-family: 'Vazir', Tahoma, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* ====== Messages ====== */
+.panel-message {
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #0c5460;
+    background-color: #d1ecf1;
+}
+
+/* ====== Filter Form ====== */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+    padding: 10px 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+    .filter-form label {
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+.input-date {
+    flex: 1;
+    max-width: 200px;
+}
+
+.btn-filter,
+.btn-show-all {
+    white-space: nowrap;
+}
+
+/* ====== Table Styling ====== */
+.appointments-table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+    .appointments-table th,
+    .appointments-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #dee2e6;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+.table-header {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.appointments-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.appointments-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* ====== Action Buttons ====== */
+.action-form {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.btn-approve {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+    .btn-approve:hover {
+        background-color: #218838;
+    }
+
+.btn-deny {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+    .btn-deny:hover {
+        background-color: #c82333;
+    }
+
+/* Table responsiveness */
+@media (max-width: 900px) {
+    .appointments-table th,
+    .appointments-table td {
+        font-size: 0.85rem;
+        padding: 8px 5px;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-date {
+        max-width: 100%;
+    }
+}
+
+
+.plate-number {
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.plate-number-group {
+    direction: ltr; /* این بخش چپ به راست بشه */
+    display: flex;
+    gap: 5px;
+}
+
+    .plate-number-group input,
+    .plate-number-group select {
+        text-align: center; /* اعداد و حروف وسط چین */
+        width: 60px; /* می‌تونید اندازه هر input رو تنظیم کنید */
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+.plate-part2 {
+    width: 50px; /* کمی کوچکتر برای حرف */
+}
+
+
+/* Add these to your CSS file */
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+/* Green Box */
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+/* Red Box */
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
