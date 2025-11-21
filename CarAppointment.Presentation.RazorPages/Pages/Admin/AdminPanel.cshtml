@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Linq
 @model CarAppointment.Presentation.RazorPages.Pages.Admin.AdminPanelModel
 @{
     ViewData["Title"] = "پنل مدیریت - نوبت‌ها";
@@ -15,7 +16,7 @@
 
 <form method="get" class="filter-form mb-3">
     <label class="form-label">فیلتر بر اساس تاریخ:</label>
-    <input type="date" asp-for="FilterDate" class="form-control input-date" />
+    <input type="date" asp-for="FilterDate" class="form-control input-date" style="max-width: 200px; display: inline-block;" />
     <button type="submit" class="btn btn-primary btn-filter">اعمال فیلتر</button>
     <a href="/Admin/AdminPanel" class="btn btn-secondary btn-show-all">نمایش همه</a>
 </form>
@@ -29,6 +30,7 @@
             <th class="th-model">مدل</th>
             <th class="th-date">تاریخ نوبت</th>
             <th class="th-status">وضعیت</th>
+            <th>تصاویر</th>
             <th class="th-actions">عملیات</th>
         </tr>
     </thead>
@@ -36,13 +38,31 @@
         @foreach (var app in Model.Appointments)
         {
             <tr class="appointment-row">
-                <td class="plate-number">@app.PlateNumber</td>
+                <td class="plate-number" dir="ltr">@app.PlateNumber</td>
                 <td class="td-owner">@app.Firstname @app.LastName</td>
                 <td class="td-brand">@app.BrandName</td> 
                 <td class="td-model">@app.ModelName</td>
                 <td class="td-date">@app.AppointmentDate.ToString("yyyy-MM-dd")</td>
                 <td class="td-status">@app.Status</td>
-                <td class="td-actions">
+                
+                <!-- اضافه شده: سلول مشاهده تصاویر -->
+                <td>
+                    @if (app.ImagePaths != null && app.ImagePaths.Any())
+                    {
+                        var imageList = string.Join(";", app.ImagePaths.Select(p => Url.Content($"~/{p}")));
+                        <button type="button"
+                                class="btn btn-outline-primary btn-sm btn-show-images"
+                                data-images="@imageList">
+                            نمایش تصاویر (@app.ImagePaths.Count)
+                        </button>
+                    }
+                    else
+                    {
+                        <span class="text-muted small">-</span>
+                    }
+                </td>
+
+                <td class="td-actions" style="display: flex; gap: 5px; justify-content: center;">
                     @if (app.Status == "Pending")
                     {
                         <form method="post" asp-page-handler="Approve" class="action-form">
@@ -60,3 +80,56 @@
         }
     </tbody>
 </table>
+
+<div id="imageModal" class="image-modal d-none" aria-hidden="true">
+    <div class="image-modal-backdrop"></div>
+    <div class="image-modal-content">
+        <button type="button" class="close-modal" aria-label="بستن">&times;</button>
+        <div class="image-modal-gallery"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('imageModal');
+            if (!modal) return;
+
+            const gallery = modal.querySelector('.image-modal-gallery');
+            const closeModal = () => {
+                modal.classList.add('d-none');
+                document.body.classList.remove('no-scroll');
+            };
+
+            document.querySelectorAll('.btn-show-images').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const images = (btn.dataset.images || '')
+                        .split(';')
+                        .map(x => x.trim())
+                        .filter(Boolean);
+
+                    if (!images.length) return;
+
+                    gallery.innerHTML = '';
+                    images.forEach(src => {
+                        const img = document.createElement('img');
+                        img.src = src.startsWith('/') ? src : `/${src}`;
+                        img.alt = 'تصویر خودرو';
+                        gallery.appendChild(img);
+                    });
+
+                    modal.classList.remove('d-none');
+                    document.body.classList.add('no-scroll');
+                });
+            });
+
+            modal.querySelector('.image-modal-backdrop').addEventListener('click', closeModal);
+            modal.querySelector('.close-modal').addEventListener('click', closeModal);
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && !modal.classList.contains('d-none')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+}

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarAppointment.Infrastracutre.EfCore.Migrations
 {
     /// <inheritdoc />
-    public partial class firstmigration : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,6 +89,26 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AppointmentImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImagePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    AppointmentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppointmentImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppointmentImages_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Brands",
                 columns: new[] { "Id", "Name" },
@@ -117,6 +137,11 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppointmentImages_AppointmentId",
+                table: "AppointmentImages",
+                column: "AppointmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ModelId",
                 table: "Appointments",
                 column: "ModelId");
@@ -132,6 +157,9 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "AppointmentImages");
 
             migrationBuilder.DropTable(
                 name: "Appointments");

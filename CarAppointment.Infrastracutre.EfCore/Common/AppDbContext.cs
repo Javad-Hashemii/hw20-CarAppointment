@@ -23,6 +23,7 @@ namespace CarAppointment.Infrastracutre.EfCore.Common
         public DbSet<Brand> Brands { get; set; }
         public DbSet<CarModel> Models { get; set; }
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<AppointmentImage>  AppointmentImages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,6 +35,7 @@ namespace CarAppointment.Infrastracutre.EfCore.Common
             modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
             modelBuilder.ApplyConfiguration(new CarModelConfiguration());
+            modelBuilder.ApplyConfiguration(new AppointmentImageConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,5 +1,6 @@
 ﻿using CarAppointment.Domain.Core.AppointmentAgg.Enums;
 using CarAppointment.Domain.Core.CarAgg.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace CarAppointment.Domain.Core.AppointmentAgg.Dtos
         public int YearBuilt { get; set; }
         public string ModelName { get; set; }
         public string BrandName { get; set; }
+        public List<string> ImagePaths { get; set; }
+
     }
 }

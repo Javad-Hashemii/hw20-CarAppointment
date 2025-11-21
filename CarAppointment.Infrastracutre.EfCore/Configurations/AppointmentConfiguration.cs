@@ -19,6 +19,11 @@ namespace CarAppointment.Infrastracutre.EfCore.Configurations
                 .WithMany(m => m.Appointments)
                 .HasForeignKey(a => a.ModelId);
 
+            // تعریف رابطه One-to-Many برای تصاویر
+            builder.HasMany(a => a.Images)
+                   .WithOne(i => i.Appointment)
+                   .HasForeignKey(i => i.AppointmentId);
+
             builder.Property(a => a.Firstname)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -34,7 +39,6 @@ namespace CarAppointment.Infrastracutre.EfCore.Configurations
             builder.Property(a => a.NationalCode)
                 .IsRequired()
                 .HasMaxLength(10);
-
 
             builder.Property(a => a.Status)
                 .HasConversion<string>()

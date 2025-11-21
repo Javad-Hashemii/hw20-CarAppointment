@@ -140,6 +140,29 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CarAppointment.Domain.Core.AppointmentAgg.Entities.AppointmentImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("AppointmentImages");
+                });
+
             modelBuilder.Entity("CarAppointment.Domain.Core.CarAgg.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -218,6 +241,17 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
                     b.Navigation("Model");
                 });
 
+            modelBuilder.Entity("CarAppointment.Domain.Core.AppointmentAgg.Entities.AppointmentImage", b =>
+                {
+                    b.HasOne("CarAppointment.Domain.Core.AppointmentAgg.Entities.Appointment", "Appointment")
+                        .WithMany("Images")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+                });
+
             modelBuilder.Entity("CarAppointment.Domain.Core.CarAgg.Entities.CarModel", b =>
                 {
                     b.HasOne("CarAppointment.Domain.Core.CarAgg.Entities.Brand", "Brand")
@@ -227,6 +261,11 @@ namespace CarAppointment.Infrastracutre.EfCore.Migrations
                         .IsRequired();
 
                     b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("CarAppointment.Domain.Core.AppointmentAgg.Entities.Appointment", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("CarAppointment.Domain.Core.CarAgg.Entities.Brand", b =>

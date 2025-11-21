@@ -42,16 +42,17 @@ namespace CarAppointment.Presentation.RazorPages.Pages.Appointment
         public IActionResult OnPost()
         {
             AppointmentDto.PlateNumber = $"{PlatePart4}{PlatePart3}{PlatePart2}{PlatePart1}";
+
             var result = appointmentService.SubmitAppointment(AppointmentDto);
             if (!result.IsSuccess)
             {
-                
+
                 Message = result.Message;
                 IsSucces = false;
                 LoadDropdowns();
                 return Page();
             }
-            IsSucces= true;
+            IsSucces = true;
             Message = "وقت معاینه با موفقیت ثبت شد.";
             ModelState.Clear();
             AppointmentDto = new AddAppointmentDto();

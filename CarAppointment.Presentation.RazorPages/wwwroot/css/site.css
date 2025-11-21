@@ -161,7 +161,12 @@ body {
     }
 
 .plate-part2 {
-    width: 50px; /* کمی کوچکتر برای حرف */
+    width: 110px; /* پهن‌تر برای نمایش بهتر حرف */
+    min-height: 44px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    padding: 8px 10px;
+    line-height: 1.4;
 }
 
 
@@ -188,4 +193,113 @@ body {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
+}
+
+/* ====== Form Layout Enhancements ====== */
+.appointment-form,
+.login-form {
+    max-width: 520px;
+    margin: 20px auto 40px auto;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-form .form-group,
+.login-form .form-group {
+    margin-bottom: 18px;
+}
+
+.appointment-form .submit-btn,
+.login-form .btn-login {
+    display: inline-block;
+    margin: 10px auto 0 auto;
+    padding: 10px 28px;
+    min-width: 170px;
+    font-size: 1rem;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.appointment-form .submit-btn {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.appointment-form .submit-btn:hover {
+    background-color: #0b5ed7;
+}
+
+.login-form {
+    text-align: center;
+}
+
+.login-form .form-group {
+    text-align: right;
+}
+
+.login-title {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+}
+
+.image-modal.d-none {
+    display: none;
+}
+
+.image-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.image-modal-content {
+    position: relative;
+    margin: 60px auto;
+    max-width: 720px;
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    border: none;
+    background: transparent;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #6c757d;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.image-modal-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.image-modal-gallery img {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    object-fit: cover;
+}
+
+.no-scroll {
+    overflow: hidden;
 }

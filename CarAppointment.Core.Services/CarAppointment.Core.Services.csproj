@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CarAppointment.Domain.Core\CarAppointment.Domain.Core.csproj" />
   </ItemGroup>
 

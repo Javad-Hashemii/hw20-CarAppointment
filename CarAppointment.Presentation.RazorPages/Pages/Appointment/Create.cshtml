@@ -17,7 +17,8 @@
         <div class="alert alert-danger form-message">@Model.Message</div>
     }
 }
-<form method="post" class="appointment-form">
+<!-- تغییر شماره ۱: اضافه شدن enctype="multipart/form-data" برای ارسال فایل -->
+<form method="post" class="appointment-form" enctype="multipart/form-data">
 
     <div class="form-group mb-3">
         <label class="form-label">نام</label>
@@ -94,6 +95,19 @@
         <label class="form-label">سال ساخت</label>
         <input asp-for="AppointmentDto.YearBuilt" type="number" class="form-control input-number" />
     </div>
+
+    <!-- تغییر شماره ۲: اضافه شدن اینپوت فایل برای بارگذاری چند عکس -->
+    <div class="form-group mb-4">
+        <label class="form-label">بارگذاری تصاویر خودرو (اختیاری)</label>
+        <!-- asp-for="AppointmentDto.ImageFiles" به این معنی است که فایل‌ها به لیست ImageFiles در DTO متصل می‌شوند -->
+        <input asp-for="AppointmentDto.ImageFiles"
+               type="file"
+               multiple
+               class="form-control"
+               accept="image/*" />
+        <small class="text-muted d-block mt-1">می‌توانید چند عکس را همزمان انتخاب کنید.</small>
+    </div>
+    <!-- پایان اضافه شدن دکمه آپلود -->
 
     <button type="submit" class="btn btn-primary submit-btn">ثبت نوبت</button>
 

@@ -115,7 +115,9 @@ namespace CarAppointment.Infrastracutre.EfCore.Repositories
 
                     // EF Core automatically generates the JOINs here
                     ModelName = a.Model.Name,
-                    BrandName = a.Model.Brand.Name
+                    BrandName = a.Model.Brand.Name,
+                    ImagePaths = a.Images.Select(i => i.ImagePath).ToList()
+
                 })
                 .ToList();
         }

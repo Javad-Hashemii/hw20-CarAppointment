@@ -24,5 +24,7 @@ namespace CarAppointment.Domain.Core.AppointmentAgg.Entities
         public int YearBuilt { get; set; }
         public int ModelId { get; set; }
         public CarModel Model { get; set; }
+
+        public List<AppointmentImage> Images { get; set; }
     }
 }
