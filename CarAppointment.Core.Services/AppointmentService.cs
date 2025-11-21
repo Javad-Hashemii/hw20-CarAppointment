@@ -29,8 +29,8 @@ namespace CarAppointment.Core.Services
             if (appointmentRepository.HasAppointmentThisYear(dto.PlateNumber, currentYear))
                 return new ResultDto { IsSuccess = false, Message = "این ماشین امسال معاینه شده است." };
 
-            int dayOfWeekNumber = ((int)dto.AppointmentDate.DayOfWeek + 1);
-            bool isEvenWeekday = dayOfWeekNumber % 2 == 0;
+            int persianDayNumber = (((int)dto.AppointmentDate.DayOfWeek + 2) % 7) + 1;
+            bool isEvenWeekday = persianDayNumber % 2 == 0;
 
             int maxRequests;
             if (isEvenWeekday)
@@ -45,13 +45,19 @@ namespace CarAppointment.Core.Services
             int countForDay = appointmentRepository.GetAppointmentCountByDate(dto.AppointmentDate);
 
             if (countForDay >= maxRequests)
+            {
                 return new ResultDto { IsSuccess = false, Message = "ظرفیت امروز تکمیل است." };
+            }
 
             if (isEvenWeekday && dto.BrandName != "ایران خودرو")
-                return new ResultDto { IsSuccess = false, Message = $"ایران خودرو فقط در روز های زوج رزرو میشود" };
+            {
+                return new ResultDto { IsSuccess = false, Message = "ایران خودرو فقط در روزهای زوج رزرو می‌شود." };
+            }
 
             if (!isEvenWeekday && dto.BrandName != "سایپا")
-                return new ResultDto { IsSuccess = false, Message = $"سایپا فقط در روز های فرد زرور میشود" };
+            {
+                return new ResultDto { IsSuccess = false, Message = "سایپا فقط در روزهای فرد رزرو می‌شود." };
+            }
 
             var appointment = new Appointment
             {

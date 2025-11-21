@@ -4,6 +4,10 @@
     ViewData["Title"] = "ثبت نوبت معاینه فنی";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css" />
+}
+
 <h2 class="page-title">ثبت نوبت معاینه فنی</h2>
 
 @if (!string.IsNullOrEmpty(Model.Message))
@@ -17,7 +21,6 @@
         <div class="alert alert-danger form-message">@Model.Message</div>
     }
 }
-<!-- تغییر شماره ۱: اضافه شدن enctype="multipart/form-data" برای ارسال فایل -->
 <form method="post" class="appointment-form" enctype="multipart/form-data">
 
     <div class="form-group mb-3">
@@ -47,7 +50,11 @@
 
     <div class="form-group mb-3">
         <label class="form-label">تاریخ نوبت</label>
-        <input asp-for="AppointmentDto.AppointmentDate" type="date" class="form-control input-date" />
+        <input type="hidden" asp-for="AppointmentDto.AppointmentDate" id="AppointmentDto_AppointmentDate" />
+        <input type="text"
+               id="persian-date-picker"
+               class="form-control input-date"
+               placeholder="تاریخ را انتخاب کنید" />
     </div>
 
     <div class="form-group mb-3 plate-number-group">
@@ -96,10 +103,8 @@
         <input asp-for="AppointmentDto.YearBuilt" type="number" class="form-control input-number" />
     </div>
 
-    <!-- تغییر شماره ۲: اضافه شدن اینپوت فایل برای بارگذاری چند عکس -->
     <div class="form-group mb-4">
         <label class="form-label">بارگذاری تصاویر خودرو (اختیاری)</label>
-        <!-- asp-for="AppointmentDto.ImageFiles" به این معنی است که فایل‌ها به لیست ImageFiles در DTO متصل می‌شوند -->
         <input asp-for="AppointmentDto.ImageFiles"
                type="file"
                multiple
@@ -107,8 +112,40 @@
                accept="image/*" />
         <small class="text-muted d-block mt-1">می‌توانید چند عکس را همزمان انتخاب کنید.</small>
     </div>
-    <!-- پایان اضافه شدن دکمه آپلود -->
 
     <button type="submit" class="btn btn-primary submit-btn">ثبت نوبت</button>
 
 </form>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hiddenInput = document.getElementById("AppointmentDto_AppointmentDate");
+            const pickerElement = $("#persian-date-picker");
+
+            pickerElement.persianDatepicker({
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                initialValue: false,
+                toolbox: {
+                    calendarSwitch: {
+                        enabled: false
+                    }
+                },
+                onSelect: function (unix) {
+                    const gregorianDate = new persianDate(unix).toDate();
+                    hiddenInput.value = gregorianDate.toISOString().substring(0, 10);
+                }
+            });
+
+            if (hiddenInput.value) {
+                const presetDate = new Date(hiddenInput.value);
+                if (!isNaN(presetDate.getTime())) {
+                    pickerElement.persianDatepicker("setDate", presetDate);
+                }
+            }
+        });
+    </script>
+}
