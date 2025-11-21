@@ -18,7 +18,6 @@ namespace CarAppointment.Core.Services
     {
         public ResultDto SubmitAppointment(AddAppointmentDto dto)
         {
-            // 1. اعتبارسنجی‌ها (بدون تغییر)
             string platePattern = @"^\d{2}\d{3}[\u0600-\u06FF]\d{2}$";
             if (!Regex.IsMatch(dto.PlateNumber, platePattern))
                 return new ResultDto { IsSuccess = false, Message = "فرمت پلاک اشتباه است" };

@@ -19,7 +19,6 @@ namespace CarAppointment.Infrastracutre.EfCore.Configurations
                 .WithMany(m => m.Appointments)
                 .HasForeignKey(a => a.ModelId);
 
-            // تعریف رابطه One-to-Many برای تصاویر
             builder.HasMany(a => a.Images)
                    .WithOne(i => i.Appointment)
                    .HasForeignKey(i => i.AppointmentId);

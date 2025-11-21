@@ -93,10 +93,8 @@ namespace CarAppointment.Infrastracutre.EfCore.Repositories
         {
             var query = dbContext.Appointments.AsNoTracking();
 
-            // 1. Apply filter first (Performance optimization)
             if (date.HasValue)
             {
-                // Note: .Date comparison works well in modern EF Core
                 query = query.Where(a => a.AppointmentDate.Date == date.Value.Date);
             }
 
@@ -112,8 +110,6 @@ namespace CarAppointment.Infrastracutre.EfCore.Repositories
                     AppointmentDate = a.AppointmentDate,
                     PlateNumber = a.PlateNumber,
                     Status = a.Status.ToString(),
-
-                    // EF Core automatically generates the JOINs here
                     ModelName = a.Model.Name,
                     BrandName = a.Model.Brand.Name,
                     ImagePaths = a.Images.Select(i => i.ImagePath).ToList()
